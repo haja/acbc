@@ -61,6 +61,7 @@ use crate::protocol::parser;
 
 /// An incoming message, decoded from the UDP stream sent by the simulator.
 #[derive(Debug)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum InboundMessage<'a> {
     RegistrationResult(RegistrationResult<'a>),
     RealtimeUpdate(RealtimeUpdate<'a>),
@@ -101,6 +102,7 @@ impl<'a> InboundMessage<'a> {
 
 /// Describes a response to the initial broadcast client connection request.
 #[derive(Clone, Debug, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RegistrationResult<'a> {
     /// The client ID of this connection, used to notify the simulator upon disconnect.
     pub connection_id: u32,
@@ -123,6 +125,7 @@ impl<'a> RegistrationResult<'a> {
 
 /// Contains the timing data for a fully or partially completed lap.
 #[derive(Debug, Copy, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Lap {
     pub lap_time_ms: i32,
     pub car_id: u16,
@@ -138,6 +141,7 @@ pub struct Lap {
 
 /// Contains replay playback information.
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct ReplayInfo {
     pub session_time: f32,
     pub remaining_time: f32,
@@ -149,6 +153,7 @@ pub struct ReplayInfo {
 ///
 /// This type of update is sent approximately once per update interval.
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RealtimeUpdate<'a> {
     /// The event index, starts at 0 when connecting, and increments with each new race weekend.
     pub event_index: u16,
@@ -210,6 +215,7 @@ impl<'a> RealtimeUpdate<'a> {
 ///
 /// This type of update is sent approximately once per update interval.
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct RealtimeCarUpdate {
     /// Unique Car ID
     pub id: u16,
@@ -253,6 +259,7 @@ pub struct RealtimeCarUpdate {
 /// to pre-allocate space for the updated information. This type of packet is sent upon initial connection,
 /// when a change to the entry list occurs, or when the client explicitly requests an update.
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct EntrylistUpdate {
     /// The list of Car IDs in the session.
     pub car_ids: Vec<u16>,
@@ -260,6 +267,7 @@ pub struct EntrylistUpdate {
 
 /// Basic driver information.
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Driver<'a> {
     pub first_name: Cow<'a, str>,
     pub last_name: Cow<'a, str>,
@@ -286,6 +294,7 @@ impl<'a> Driver<'a> {
 /// This packet will typically have been preceded by an [`EntrylistUpdate`] containing its ID.
 /// `nationality` and `cup_category` appear to reflect those of the current driver.
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct EntrylistCar<'a> {
     pub id: u16,
     pub model: CarModel,
@@ -324,6 +333,7 @@ pub type HudPages<'a> = Vec<Cow<'a, str>>;
 /// reader. `name` is typically human readable rather than the `spa_2020` format used in the config
 /// files.
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct TrackData<'a> {
     pub name: Cow<'a, str>,
     pub id: u32,
@@ -361,6 +371,7 @@ impl<'a> TrackData<'a> {
 
 /// A message indicating a relevant event has occurred in the session.
 #[derive(Debug, Clone)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct BroadcastingEvent<'a> {
     pub event_type: BroadcastingEventType,
     pub message: Cow<'a, str>,

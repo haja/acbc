@@ -11,6 +11,7 @@ use std::fmt::{Display, Formatter};
 
 /// The type of session the connected simulator is running.
 #[derive(Debug, Copy, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum SessionType {
     Practice,
     Qualifying,
@@ -42,6 +43,7 @@ impl TryFrom<u8> for SessionType {
 
 /// The phase of the simulator's current session.
 #[derive(Debug, Copy, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum SessionPhase {
     /// The simulator itself has not started yet, rarely seen.
     None,
@@ -85,6 +87,7 @@ impl TryFrom<u8> for SessionPhase {
 
 /// The current location of a car.
 #[derive(Debug, Copy, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum CarLocation {
     None,
     Track,
@@ -110,6 +113,7 @@ impl TryFrom<u8> for CarLocation {
 
 /// The nationality of a Car or Driver.
 #[derive(Debug, Copy, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum Nationality {
     Any,
     Italy,
@@ -282,6 +286,7 @@ impl TryFrom<u16> for Nationality {
 /// A selected Car Model.
 #[allow(clippy::upper_case_acronyms)]
 #[derive(Debug, Copy, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum CarModel {
     Porsche911,
     MercedesAMG,
@@ -423,6 +428,7 @@ impl Display for CarModel {
 /// - `Silver` = Silver Badge, SILVER Class
 /// - `Bronze` = Red Badge, AM Class
 #[derive(Debug, Copy, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum DriverCategory {
     Platinum,
     Gold,
@@ -453,6 +459,7 @@ impl TryFrom<u8> for DriverCategory {
 ///
 /// The other categories here, `ProAm` and `National` possibly only appear in single-player campaign modes.
 #[derive(Debug, Copy, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum CupCategory {
     Overall,
     ProAm,
@@ -478,6 +485,7 @@ impl TryFrom<u8> for CupCategory {
 
 /// The type of an event relevant to the broadcast.
 #[derive(Debug, Copy, Clone, PartialEq)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub enum BroadcastingEventType {
     /// No specific type, message may still be populated with information.
     None,
