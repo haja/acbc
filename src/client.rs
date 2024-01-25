@@ -96,7 +96,7 @@ where
         req.encode(&mut buffer)?;
         socket.send(&buffer)?;
 
-        // Set a 1s timeout and wait for the registration reply to come back, if we get something else, panic for now
+        // Set a 1s timeout and wait for the registration reply to come back, if we get something else, err out
         socket.set_read_timeout(Some(Duration::from_secs(1)))?;
         let mut incoming = vec![0u8; UDP_MAX];
         let size = socket.recv(&mut incoming)?;
@@ -116,7 +116,9 @@ where
             }
             Ok(_) => {
                 // Without the connection ID we can't shut down later on, so we cannot continue
-                panic!("Recevied a non-registration reply as first incoming packet!");
+                Err(ClientError::RegistrationError(
+                    "Received a non-registration reply as first incoming packet!".into()
+                ))
             }
             Err(e) => Err(ClientError::MessageDecodeError(e)),
         }?;
