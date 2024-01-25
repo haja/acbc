@@ -376,14 +376,14 @@ fn realtime_car_update(input: &[u8]) -> Res<&[u8], RealtimeCarUpdate> {
     )
 }
 
-fn camera_set<'a>(input: &'a [u8]) -> Res<&'a [u8], (Cow<'a, str>, CameraSet)> {
+fn camera_set(input: &[u8]) -> Res<&[u8], (Cow<'_, str>, CameraSet)> {
     context("camera_set", tuple((kstring, length_count(le_u8, kstring))))(input).map(
         |(next_input, (set_name, cameras))| {
             (
                 next_input,
                 (
                     Cow::Borrowed(set_name),
-                    cameras.into_iter().map(|s| Cow::Borrowed(s)).collect(),
+                    cameras.into_iter().map(Cow::Borrowed).collect(),
                 ),
             )
         },
@@ -401,7 +401,7 @@ fn track_data(input: &[u8]) -> Res<&[u8], TrackData> {
             le_u32,
             length_count(le_u8, camera_set),
             map(length_count(le_u8, kstring), |h| {
-                h.into_iter().map(|s| Cow::Borrowed(s)).collect()
+                h.into_iter().map(Cow::Borrowed).collect()
             }),
         )),
     )(input)

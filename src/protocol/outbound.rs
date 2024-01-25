@@ -43,10 +43,10 @@ impl<W: Write> OutboundMessage<W> for RegistrationRequest<'_> {
     fn encode(self, writer: &mut W) -> std::io::Result<()> {
         writer.write_all(&[0x01])?; // Packet type
         writer.write_u8(self.version)?; // Protocol version header
-        write_kstring(&self.username, writer)?;
-        write_kstring(&self.password, writer)?;
+        write_kstring(self.username, writer)?;
+        write_kstring(self.password, writer)?;
         writer.write_u32::<LittleEndian>(self.interval)?;
-        write_kstring(&self.command_password, writer)
+        write_kstring(self.command_password, writer)
     }
 }
 

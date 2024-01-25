@@ -103,7 +103,7 @@ where
 
         let packet = &incoming[..size];
 
-        let connection_id: u32 = match InboundMessage::decode(&packet) {
+        let connection_id: u32 = match InboundMessage::decode(packet) {
             Ok(InboundMessage::RegistrationResult(res)) => {
                 if res.connection_success {
                     info!("Successfully registered with ACC Server");
@@ -178,12 +178,12 @@ where
                     "Received realtime session update for time {}",
                     rt.session_time
                 );
-                self.handler.realtime_update(&self, &rt)
+                self.handler.realtime_update(self, &rt)
             }
             InboundMessage::RealtimeCarUpdate(rt) => {
                 trace!("Received realtime car update for car ID {}", rt.id);
                 self.context.update_car_state(rt.clone());
-                self.handler.realtime_car_update(&self, &rt)
+                self.handler.realtime_car_update(self, &rt)
             }
             InboundMessage::EntrylistUpdate(list) => {
                 debug!(
@@ -191,21 +191,21 @@ where
                     list.car_ids.len()
                 );
                 self.context.seed_entrylist(&list);
-                self.handler.entrylist_update(&self, &list)
+                self.handler.entrylist_update(self, &list)
             }
             InboundMessage::EntrylistCar(car) => {
                 debug!("Received entry information packet for car ID {}", car.id);
                 self.context.update_car_entry(car.clone());
-                self.handler.entrylist_car(&self, &car)
+                self.handler.entrylist_car(self, &car)
             }
             InboundMessage::TrackData(track) => {
                 debug!("Received track data packet for {}", track.name);
                 self.context.update_track_data(track.clone());
-                self.handler.track_data(&self, &track)
+                self.handler.track_data(self, &track)
             }
             InboundMessage::BroadcastingEvent(event) => {
                 debug!("Received broadcasting event {:?}", event.event_type);
-                self.handler.broadcasting_event(&self, &event)
+                self.handler.broadcasting_event(self, &event)
             }
             InboundMessage::RegistrationResult(_) => (),
         }
