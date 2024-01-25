@@ -1,11 +1,11 @@
 [package]
 name = "acbc"
-version = "0.1.0"
+version = "0.1.1"
 authors = ["Richard Bradfield <bradfier@fstab.me>"]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
-repository = "https://github.com/bradfier/acbc"
-homepage = "https://github.com/bradfier/acbc"
+repository = "https://github.com/haja/acbc"
+homepage = "https://github.com/haja/acbc"
 description = """
 A protcol decoder crate for the ACC Broadcasting API by Kunos Simulazioni
 """
