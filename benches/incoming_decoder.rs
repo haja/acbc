@@ -1,4 +1,4 @@
-use acbc::InboundMessage;
+use acbc::protocol::InboundMessage;
 use criterion::{criterion_group, criterion_main, Criterion, Throughput};
 
 fn decode_incoming_update(c: &mut Criterion) {
@@ -7,12 +7,12 @@ fn decode_incoming_update(c: &mut Criterion) {
     bench.throughput(Throughput::Elements(1));
 
     bench.bench_function("decode_realtime_update", |b| {
-        b.iter(|| InboundMessage::parse(input).unwrap());
+        b.iter(|| InboundMessage::decode(input).unwrap());
     });
 
     let input = include_bytes!("../docs/pcap/realtime_car_update.bin");
     bench.bench_function("decode_realtime_car_update", |b| {
-        b.iter(|| InboundMessage::parse(input).unwrap());
+        b.iter(|| InboundMessage::decode(input).unwrap());
     });
 }
 
