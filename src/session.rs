@@ -90,7 +90,7 @@ impl Context {
     }
 
     pub(crate) fn update_car_entry(&mut self, updated_car: EntrylistCar) {
-        if let Some(mut e) = self.cars.get_mut(&updated_car.id) {
+        if let Some(e) = self.cars.get_mut(&updated_car.id) {
             e.entry = Some(updated_car.into_owned());
         } else {
             self.cars.insert(
@@ -101,7 +101,7 @@ impl Context {
     }
 
     pub(crate) fn update_car_state(&mut self, update: RealtimeCarUpdate) {
-        if let Some(mut e) = self.cars.get_mut(&update.id) {
+        if let Some(e) = self.cars.get_mut(&update.id) {
             // Check if a lap has been completed
             if let Some(ref previous) = e.state {
                 if update.laps > previous.laps {
