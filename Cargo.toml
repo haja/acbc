@@ -1,6 +1,6 @@
 [package]
 name = "acbc"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Richard Bradfield <bradfier@fstab.me>"]
 license = "AGPL-3.0-or-later"
 readme = "README.md"

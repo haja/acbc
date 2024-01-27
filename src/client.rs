@@ -124,7 +124,8 @@ where
         }?;
 
         // Put the socket back in blocking mode
-        socket.set_read_timeout(None)?;
+        // TODO for now, we set a timeout, since ACC seems to stop sending updates after leaving a server/session
+        socket.set_read_timeout(Some(Duration::from_secs(30)))?;
 
         Ok(Self {
             connection_id,
