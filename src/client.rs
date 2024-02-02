@@ -161,7 +161,9 @@ where
     fn shutdown_impl(&mut self) -> Result<(), std::io::Error> {
         let unregister = UnregisterRequest::new(self.connection_id);
         let res = self.send(unregister);
+        log::info!("Sent BroadcastingClient UnregisterRequest");
         if res.is_ok() {
+            log::info!("Shutdown of BroadcastingClient successful");
             self.stopped = true;
         }
         res
